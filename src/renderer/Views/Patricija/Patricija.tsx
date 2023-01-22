@@ -1,5 +1,5 @@
 import { electron } from 'process';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface Izjava {
@@ -60,13 +60,27 @@ const izjave: Izjava[] = [
   },
 ];
 
-const playSound = async (pathToAudio?: string) => {
-  const audio = new Audio(pathToAudio);
-  audio.play();
-};
-
 const Patricija = () => {
   const navigate = useNavigate();
+
+  const [playing, setPlaying] = useState<any>();
+
+  useEffect(() => {
+    if (playing) playing.play();
+  }, [playing]);
+
+  const playSound = async (pathToAudio?: string) => {
+    if (playing) playing.pause();
+    const audio = new Audio(pathToAudio);
+    setPlaying(audio);
+  };
+
+  const stopSound = () => {
+    if (playing) {
+      playing.pause();
+      setPlaying(null);
+    }
+  };
   return (
     <div className="buttons">
       <button onClick={() => navigate('/')} className="home" type="button">
@@ -75,6 +89,14 @@ const Patricija = () => {
         </span>
         Kući
       </button>
+      {playing && (
+        <button onClick={stopSound} className="stop" type="button">
+          <span role="img" aria-label="home">
+            ⛔
+          </span>
+          Prekini
+        </button>
+      )}
       {izjave.map((izjava) => {
         return (
           <button onClick={() => playSound(izjava.pathToAudio)} type="button">
