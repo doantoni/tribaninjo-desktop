@@ -1,4 +1,5 @@
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
+import path from 'path';
 
 export type Channels = 'ipc-example';
 

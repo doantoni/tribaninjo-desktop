@@ -109,12 +109,20 @@
     }
   },
   "dependencies": {
+    "@electron/remote": "^2.0.9",
+    "child_process": "^1.0.2",
+    "electron-audio": "^0.1.0",
     "electron-debug": "^3.2.0",
     "electron-log": "^4.4.8",
     "electron-updater": "^5.2.3",
+    "fs": "0.0.1-security",
+    "path-browserify": "^1.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.4.0"
+    "react-router-dom": "^6.4.0",
+    "sound-play": "^1.1.0",
+    "styled-components": "^5.3.6",
+    "util": "^0.12.5"
   },
   "devDependencies": {
     "@electron/notarize": "^1.2.3",
@@ -126,9 +134,12 @@
     "@testing-library/react": "^13.3.0",
     "@types/jest": "^28.1.7",
     "@types/node": "18.7.6",
+    "@types/path-browserify": "^1.0.0",
     "@types/react": "^18.0.17",
     "@types/react-dom": "^18.0.6",
     "@types/react-test-renderer": "^18.0.0",
+    "@types/sound-play": "^1.1.0",
+    "@types/styled-components": "^5.1.26",
     "@types/terser-webpack-plugin": "^5.0.4",
     "@types/webpack-bundle-analyzer": "^4.4.2",
     "@typescript-eslint/eslint-plugin": "^5.33.1",
@@ -141,7 +152,7 @@
     "css-loader": "^6.7.1",
     "css-minimizer-webpack-plugin": "^4.0.0",
     "detect-port": "^1.3.0",
-    "electron": "^20.0.2",
+    "electron": "^22.0.3",
     "electron-builder": "^23.3.3",
     "electron-devtools-installer": "^3.2.0",
     "electronmon": "^2.0.2",
@@ -186,7 +197,7 @@
     "webpack-merge": "^5.8.0"
   },
   "build": {
-    "productName": "ElectronReact",
+    "productName": "Tribaninjo",
     "appId": "org.erb.ElectronReact",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
@@ -262,5 +273,9 @@
       "src/main/**"
     ],
     "logLevel": "quiet"
+  },
+  "browser": {
+    "child_process": false,
+    "crypto": false
   }
 }

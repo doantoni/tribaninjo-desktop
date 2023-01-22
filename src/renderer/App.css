@@ -9,8 +9,8 @@ body {
   background: linear-gradient(
     200.96deg,
     #fedc2a -29.09%,
-    #dd5789 51.77%,
-    #7a2c9e 129.35%
+    #57dd79 51.77%,
+    #0077ff 129.35%
   );
   font-family: sans-serif;
   overflow-y: hidden;
@@ -54,9 +54,17 @@ a:hover {
   text-decoration: none;
 }
 
-.Hello {
+.buttons {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
   margin: 20px 0;
+}
+
+.home {
+  position: absolute;
+  top: 5px;
+  left: 5px
 }
