@@ -17,6 +17,11 @@ declare module '*.jpg' {
   export default content;
 }
 
+declare module '*.mp3' {
+  const content: HTMLAudioElement;
+  export default content;
+}
+
 declare module '*.scss' {
   const content: Styles;
   export default content;

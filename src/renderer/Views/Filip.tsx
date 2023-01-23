@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface Izjava {
@@ -55,22 +55,37 @@ const Filip = () => {
 
   const [playing, setPlaying] = useState<any>();
 
-  useEffect(() => {
-    if (playing) playing.play();
-  }, [playing]);
-
-  const playSound = async (pathToAudio?: string) => {
-    if (playing) playing.pause();
-    const audio = new Audio(pathToAudio);
-    setPlaying(audio);
-  };
-
-  const stopSound = () => {
+  const stopSound = useCallback(() => {
     if (playing) {
       playing.pause();
       setPlaying(null);
     }
+  }, [playing]);
+  useEffect(() => {
+    const loadedMetadataListener = (e: any) => {
+      setTimeout(() => {
+        setPlaying(null);
+      }, e.path[0].duration * 1000);
+    };
+    if (playing) {
+      playing.play();
+      playing.addEventListener('loadedmetadata', loadedMetadataListener);
+    }
+
+    return () =>
+      document.removeEventListener('loadedmetadata', loadedMetadataListener);
+  }, [playing, stopSound]);
+
+  const playSound = async (pathToAudio?: string) => {
+    const ding: any = await window.electron.convertSong(
+      'assets/audio/ding.mp3'
+    );
+    if (playing) playing.pause();
+    const audio = new Audio(pathToAudio);
+    audio.setAttribute('preload', 'metadata');
+    setPlaying(audio);
   };
+
   return (
     <div className="buttons">
       <button onClick={() => navigate('/')} className="home" type="button">
@@ -89,7 +104,11 @@ const Filip = () => {
       )}
       {izjave.map((izjava) => {
         return (
-          <button onClick={() => playSound(izjava.pathToAudio)} type="button">
+          <button
+            key={izjava.title}
+            onClick={() => playSound(izjava.pathToAudio)}
+            type="button"
+          >
             <span role="img" aria-label="folded hands">
               🐴
             </span>
